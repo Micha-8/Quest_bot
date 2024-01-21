@@ -39,4 +39,4 @@
 Для связи с разработчиками можно использовать следующие контакты:
 
 - [Telegram](https://web.telegram.org/k/#@Michadze)
-- [Почта](yurovmd@mail.ru)
+- [Почта](https://e.mail.ru/inbox)
