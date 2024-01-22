@@ -25,28 +25,28 @@ def filter_bye(message):
     return 'пока' in message.text.lower()
 
 
-@bot.message_handler(commands=["start"])
+@bot.message_handler(commands=['start'])
 def handle_start(message):
     global user_data
     user_data[message.chat.id] = {
-        "name": message.from_user.first_name,
-        "id": message.from_user.id,
-        "location": ""}  # хотел еще персонажа грузить, но как бы не пробовал не получалось
+        'name': message.from_user.first_name,
+        'id': message.from_user.id,
+        'location': ''}  # хотел еще персонажа грузить, но как бы не пробовал не получалось
     save_user_data(user_data, data_path)
 
     bot.send_message(
         message.chat.id,
-        f"<b>Привет, {message.chat.first_name}!</b>\n\n"
-        f"{say_start}",
-        parse_mode="HTML",
+        f'<b>Привет, {message.chat.first_name}!</b>\n\n'
+        f'{say_start}',
+        parse_mode='HTML',
         reply_markup=main_markup)
 
 
 @bot.message_handler(commands=['help'])
 def handle_help(message):
-    bot.send_message(message.chat.id, f"<b>Список команд:</b>\n"
-                                      f"{"\n".join(commands.values())}",
-                     parse_mode="HTML",
+    bot.send_message(message.chat.id, f'<b>Список команд:</b>\n'
+                                      f'{'\n'.join(commands.values())}',
+                     parse_mode='HTML',
                      reply_markup=main_markup
                      )
 
@@ -54,7 +54,7 @@ def handle_help(message):
 @bot.message_handler(commands=['quest_rules'])
 def handle_help(message):
     bot.send_message(message.chat.id, f'{rules}',
-                     parse_mode="HTML",
+                     parse_mode='HTML',
                      reply_markup=main_markup
                      )
 
@@ -71,17 +71,17 @@ def character_choicen(message):
         # ну можно вынести эту команду в сам квест, но я хочу ее отдельно
         user_character = choice_your_character(message)
         bot.send_message(message.chat.id, f'<b>Твой персонаж: {user_character.name}</b>\n'
-                                          f'Его атрибуты:\n'
+                                          f'Его атрибуты: \n'
                                           f'Ловкость: {user_character.agility}\n'
                                           f'Сила: {user_character.strength}\n'
                                           f'Интеллект: {user_character.intellect}\n',
-                         parse_mode="HTML",
+                         parse_mode='HTML',
                          reply_markup=main_markup
                          )
         user_data[message.chat.id] = {
-            "name": message.from_user.first_name,
-            "id": message.from_user.id,
-            "location": ""}
+            'name': message.from_user.first_name,
+            'id': message.from_user.id,
+            'location': ''}
         save_user_data(user_data, data_path)
     except UnboundLocalError:
         bot.send_message(message.chat.id, 'Выбери существующего персонажа ',
@@ -96,7 +96,7 @@ def check_user_start(message):
         print(user_character.intellect)
     except:
         bot.send_message(message.chat.id, 'Сначала выбери персонажа',
-                         parse_mode="HTML",
+                         parse_mode='HTML',
                          reply_markup=main_markup
                          )
 
@@ -107,9 +107,9 @@ def handle_start_quest(message):
     send_question(bot, message, '1', markup)
 
     user_data[message.chat.id] = {
-        "name": message.from_user.first_name,
-        "id": message.from_user.id,
-        "location": "cell"}
+        'name': message.from_user.first_name,
+        'id': message.from_user.id,
+        'location': 'cell'}
     save_user_data(user_data, data_path)
     bot.register_next_step_handler(message, cell_find)
 
@@ -136,9 +136,9 @@ def in_house(message):
     send_question(bot, message, '3', markup)
 
     user_data[message.chat.id] = {
-        "name": message.from_user.first_name,
-        "id": message.from_user.id,
-        "location": "house"}
+        'name': message.from_user.first_name,
+        'id': message.from_user.id,
+        'location': 'house'}
     save_user_data(user_data, data_path)
     bot.register_next_step_handler(message, which_room_you_go_check)
 
@@ -165,9 +165,9 @@ def in_forest(message):
     markup = make_keyboard(markup_names)
     send_question(bot, message, '5', markup)
     user_data[message.chat.id] = {
-        "name": message.from_user.first_name,
-        "id": message.from_user.id,
-        "location": "forest"}
+        'name': message.from_user.first_name,
+        'id': message.from_user.id,
+        'location': 'forest'}
     bot.register_next_step_handler(message, which_helper_you_go)
 
 
@@ -185,7 +185,7 @@ def last_fight(message):
 def end_of_game(message):
     send_aftereffect_final_answer(bot, message, user_character, error_func)
     bot.send_message(message.chat.id, 'Это конец игры, спасибо за прохождение',
-                     parse_mode="HTML",
+                     parse_mode='HTML',
                      reply_markup=main_markup
                      )
 
@@ -193,42 +193,40 @@ def end_of_game(message):
 def error_func(message):
     bot.send_message(message.chat.id, 'Внимательно изучи правила.\n'
                                       'Ты сделал что-то не так',
-                     parse_mode="HTML",
+                     parse_mode='HTML',
                      reply_markup=main_markup
                      )
 
 
 @bot.message_handler(content_types=['text'], func=filter_hello)
 def say_hello(message):
-    bot.send_message(message.chat.id, "Привет!",
+    bot.send_message(message.chat.id, 'Привет!',
                      reply_markup=main_markup)
 
 
 @bot.message_handler(content_types=['text'], func=filter_bye)
 def say_goodbye(message):
-    bot.send_message(message.chat.id, "До свидания!",
+    bot.send_message(message.chat.id, 'До свидания!',
                      reply_markup=main_markup)
 
 
 @bot.message_handler(content_types=['sticker'])
 def sticker_answer(message):
-    bot.send_message(message.chat.id, f"{cool_sticker}",
+    bot.send_message(message.chat.id, f'{cool_sticker}',
                      reply_markup=main_markup)
 
 
 @bot.message_handler(content_types=['text'])
 def text_answer(message):
     bot.send_message(message.chat.id,
-                     f"{not_understand_text}",
+                     f'{not_understand_text}',
                      reply_markup=main_markup)
 
 
 @bot.message_handler(content_types=['audio', 'video', 'voice', 'photo', 'document'])
 def media_answer(message):
-    bot.send_message(message.chat.id, f"{not_understand_media}",
+    bot.send_message(message.chat.id, f'{not_understand_media}',
                      reply_markup=main_markup)
 
-
-# жду примерно миллион исправлений, но мне нравиться что я сделал
 
 bot.infinity_polling()
