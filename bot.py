@@ -4,7 +4,7 @@ from game import (classes_show, choice_your_character, make_keyboard, send_quest
                   send_aftereffect_door_answer, send_aftereffect_helpers_answer,
                   get_answers_in_answers_and_aftereffects,
                   send_aftereffect_final_answer, check_user_character, send_photo)
-from info import say_start, rules, storyline, commands, cool_sticker, not_understand_media, not_understand_text
+from info import say_start, rules, storyline, commands, Cool_sticker, Not_understand_media, Not_understand_text
 from data import save_user_data, data_path, user_data
 import telebot
 import os
@@ -15,7 +15,7 @@ token = os.getenv('token')
 bot = telebot.TeleBot(token)
 
 main_markup = make_keyboard(list(commands.keys()))
-
+help_commands_send = '\n'.join(commands.values())
 
 def filter_hello(message):
     return 'привет' in message.text.lower()
@@ -45,7 +45,7 @@ def handle_start(message):
 @bot.message_handler(commands=['help'])
 def handle_help(message):
     bot.send_message(message.chat.id, f'<b>Список команд:</b>\n'
-                                      f'{'\n'.join(commands.values())}',
+                                      f'{help_commands_send}',
                      parse_mode='HTML',
                      reply_markup=main_markup
                      )
@@ -93,7 +93,6 @@ def character_choicen(message):
 def check_user_start(message):
     try:
         check_user_character(message, user_character, error_func, handle_start_quest)
-        print(user_character.intellect)
     except:
         bot.send_message(message.chat.id, 'Сначала выбери персонажа',
                          parse_mode='HTML',
@@ -212,20 +211,20 @@ def say_goodbye(message):
 
 @bot.message_handler(content_types=['sticker'])
 def sticker_answer(message):
-    bot.send_message(message.chat.id, f'{cool_sticker}',
+    bot.send_message(message.chat.id, f'{Cool_sticker}',
                      reply_markup=main_markup)
 
 
 @bot.message_handler(content_types=['text'])
 def text_answer(message):
     bot.send_message(message.chat.id,
-                     f'{not_understand_text}',
+                     f'{Not_understand_text}',
                      reply_markup=main_markup)
 
 
 @bot.message_handler(content_types=['audio', 'video', 'voice', 'photo', 'document'])
 def media_answer(message):
-    bot.send_message(message.chat.id, f'{not_understand_media}',
+    bot.send_message(message.chat.id, f'{Not_understand_media}',
                      reply_markup=main_markup)
 
 
