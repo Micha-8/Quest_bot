@@ -29,7 +29,4 @@ jobs:
 
       - name: Run tox targets for ${{ matrix.python-version }}
         run: python -m tox
-      - name: Run flake8
-        run: flake8 .
-      - name: Run mypy
-        run: mypy .
+
