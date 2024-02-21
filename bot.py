@@ -1,9 +1,11 @@
-from game import (classes_show, choice_your_character, make_keyboard, send_question, check_first_answer,
-                  send_aftereffect_room_answer, add_variants_for_second_answer, send_aftereffect_cell_answer,
-                  add_variants_for_fourth_answer,
-                  send_aftereffect_door_answer, send_aftereffect_helpers_answer,
-                  get_answers_in_answers_and_aftereffects,
-                  send_aftereffect_final_answer, check_user_character, send_photo)
+from game import (
+    classes_show, choice_your_character, make_keyboard, send_question, check_first_answer,
+    send_aftereffect_room_answer, add_variants_for_second_answer, send_aftereffect_cell_answer,
+    add_variants_for_fourth_answer,
+    send_aftereffect_door_answer, send_aftereffect_helpers_answer,
+    get_answers_in_answers_and_aftereffects,
+    send_aftereffect_final_answer, check_user_character, send_photo
+)
 from info import say_start, rules, storyline, commands, Cool_sticker, Not_understand_media, Not_understand_text
 from data import save_user_data, data_path, user_data
 import telebot
@@ -16,6 +18,7 @@ bot = telebot.TeleBot(token)
 
 main_markup = make_keyboard(list(commands.keys()))
 help_commands_send = '\n'.join(commands.values())
+
 
 def filter_hello(message):
     return 'привет' in message.text.lower()
